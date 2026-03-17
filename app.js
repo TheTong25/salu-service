@@ -26,7 +26,8 @@ const authRoutes = require('./src/routes/auth.routes');
 app.use('/api/auth', authRoutes);
 
 app.get("/", (req, res) => {
-    res.json({ message: "Server is running!" });
+    res.send("Salu Service API is running 🚀");
 });
+
 
 module.exports = app;
