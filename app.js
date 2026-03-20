@@ -7,6 +7,7 @@ dotenv.config({ quiet: true });
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+app.use('/uploads', express.static('public/uploads'));
 app.use((req, res, next) => {
     console.log(`${new Date().toISOString()} - ${req.method} ${req.url}`);
     next();
@@ -25,9 +26,16 @@ app.use(cookieParser());
 const authRoutes = require('./src/routes/auth.routes');
 app.use('/api/auth', authRoutes);
 
-app.get("/", (req, res) => {
-    res.send("Salu Service API is running 🚀");
-});
+// Menu routes (unified system for food, drinks, and snacks)
+const menuRoutes = require('./src/routes/menu.routes');
+app.use('/api/menu', menuRoutes);
 
+// Category routes
+const categoryRoutes = require('./src/routes/category.routes');
+app.use('/api/categories', categoryRoutes);
+
+app.get("/", (req, res) => {
+    res.json({ message: "Server is running!" });
+});
 
 module.exports = app;
